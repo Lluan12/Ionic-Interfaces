@@ -6,6 +6,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">  
+  <ion-fab vertical="top" horizontal="end" slot="fixed" [edge]="true">
+    <ion-fab-button (click)=" openAddProductPage('/add-product')">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-grid>
     <ion-row>
       <ion-col size="12">
@@ -48,6 +54,12 @@
           </ion-card-content>
           <ion-button expand="block" (click)="addToCart(product, i)">
             <ion-icon name="cart-outline" ></ion-icon>
+          </ion-button>
+          <ion-button expand="block" (click)="promptRemoveItem(i)"  color="danger">
+            <ion-icon name="trash-outline" ></ion-icon>
+          </ion-button>
+          <ion-button expand="block" (click)=" openActProductPage('/update-product',product,i)"  color="warning">
+            <ion-icon name="pencil" ></ion-icon>
           </ion-button>
         </ion-card>
       </ion-col>

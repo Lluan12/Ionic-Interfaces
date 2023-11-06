@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Product } from '../models/product.model';
+import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -37,7 +40,9 @@ export class Tab1Page {
     }
   ];
 
-  constructor(private cartService: CartService) {
+  constructor(private productService: ProductService,private cartService: CartService,private router: Router,private alertController: AlertController) {
+
+    
     this.products.push({
       name: "Aguacate",
       price: 100,
@@ -93,5 +98,42 @@ export class Tab1Page {
     console.log(this.cartService.getCart());
   }
 
+  public openAddProductPage(rut : string) {
+    this.router.navigate([rut]);
+  }
+
+  public openActProductPage(rut : string, product: Product, i: number) {
+    this.productService.setProductAct(product);
+    this.productService.setIndice(i);
+    this.router.navigate([rut]);
+  }
+
+
+  async promptRemoveItem(index: number) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar Producto',
+      message: `¿deseas eliminar?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: (data) => {
+              console.log(index);
+              this.productService.removeProduct(index);
+            
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
+  }
+  ionViewWillEnter(){
+    this.products = this.productService.getProducts();
+    this.productsFounds = this.products;
+  }
 
 }

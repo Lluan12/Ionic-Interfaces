@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>update-product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="productForm">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input type="number" formControlName="price"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Imagen</ion-label>
+        <ion-input type="text" formControlName="photo"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Tipo</ion-label>
+        <ion-select formControlName="type">
+          <ion-select-option value="Abarrotes">Abarrotes</ion-select-option>
+          <ion-select-option value="Frutas y Verduras">Frutas y Verduras</ion-select-option>
+          <ion-select-option value="Limpieza">Limpieza</ion-select-option>
+          <ion-select-option value="Farmacia">Farmacia</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  
+    <ion-button expand="block" type="submit" [disabled]="!productForm.valid" (click)="actProduct()" >Guardar</ion-button>
+  </form>
+</ion-content>
