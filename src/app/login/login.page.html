@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="12">
+      <div class="login-container">
+        <ion-card class="login-card">
+          <ion-card-header>
+            <ion-img src="../../assets/user.png" class="logo"></ion-img>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="loginForm">
+              <ion-list>
+                <ion-item>
+                  <ion-input type="text" placeholder="Usuario" formControlName="user"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input type="password" placeholder="Contraseña" formControlName="password"></ion-input>
+                </ion-item>
+              </ion-list>
+              <ion-button expand="full" fill="solid" (click)="login()" class="login-button">Iniciar Sesión</ion-button>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-content>
