@@ -7,9 +7,17 @@
 
 <ion-content [fullscreen]="true">  
   <ion-fab vertical="top" horizontal="end" slot="fixed" [edge]="true">
-    <ion-fab-button (click)=" openAddProductPage('/add-product')">
-      <ion-icon name="add"></ion-icon>
+    <ion-fab-button>
+      <ion-icon name="chevron-down-circle"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button (click)=" openAddProductPage('/add-product')">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 
   <ion-grid>

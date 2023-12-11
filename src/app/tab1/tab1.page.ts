@@ -4,6 +4,7 @@ import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tab1',
@@ -40,7 +41,9 @@ export class Tab1Page {
     }
   ];
 
-  constructor(private productService: ProductService,private cartService: CartService,private router: Router,private alertController: AlertController) {
+  constructor(private productService: ProductService,private cartService: CartService,private router: Router,private alertController: AlertController,
+    private authService: AuthService
+    ) {
 
     
     this.products.push({
@@ -131,6 +134,13 @@ export class Tab1Page {
   
     await alert.present();
   }
+
+
+  public logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   ionViewWillEnter(){
     this.products = this.productService.getProducts();
     this.productsFounds = this.products;
