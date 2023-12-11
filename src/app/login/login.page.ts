@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginPage {
 
-  user: string;
-  password: string;
   public loginForm : FormGroup;
 
-  constructor(private formBuilder:FormBuilder, private toastControler: ToastController, private router: Router) {
-    this.user = "";
-    this.password = "";
+  constructor(private formBuilder:FormBuilder, private toastController: ToastController, private router: Router,
+    private authService: AuthService
+    ) {
     //hacer los campos de user y password requeridos
     this.loginForm = this.formBuilder.group({
       user: ['',Validators.required],
@@ -26,27 +24,23 @@ export class LoginPage {
    }
 
   async login() {
-    this.user = this.loginForm.value.user;
-    this.password = this.loginForm.value.password;
-    if (this.user == "lluan" && this.password == "1234") {
-      const toast = await this.toastControler.create({
-        message: 'Bienvenido '+this.user,
-        duration: 2000,
-        position: 'top',
-        color: 'success'
-      });
-      toast.present();
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      this.router.navigate(['/tabs/tab1']);
-    } else {
-      const toast = await this.toastControler.create({
-        message: 'Credenciales Incorrectas',
-        duration: 2000,
-        position: 'top',
-        color: 'danger'
-      });
-      toast.present();
-      this.loginForm.reset();
-    }
-  }
+    if (this.loginForm && this.loginForm.valid) {
+      const username = this.loginForm.get('user')?.value;
+      const password = this.loginForm.get('password')?.value;
+
+      if (this.authService.login(username, password)) {
+        // Autenticación exitosa, redirige al usuario a la página principal.
+        // Reemplaza 'home' con la ruta correcta.
+        this.router.navigate(['/tabs/tab1']);
+      } else {
+        // Autenticación fallida, muestra un mensaje de error o realiza otras acciones.
+        const toast = await this.toastController.create({
+          message: 'Credenciales incorrectas. Por favor, inténtalo de nuevo.',
+          duration: 3000, // Duración del toast en milisegundos
+          position: 'bottom', // Posición del toast (top, middle, bottom)
+          color: 'danger', // Color del toast
+        });
+        toast.present();
+      }
+    }  }
 }
